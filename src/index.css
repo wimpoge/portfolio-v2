@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&family=Inter&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  background: #181a1b;
+  color: white;
+  font-family:'Comfortaa', 'Inter', sans-serif;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+@keyframes typing {
+  from { width: 0 }
+}
+
+@keyframes blink-caret {
+  50% { border-color: transparent; }
+}
+
+.typing-animation {
+  overflow: hidden;
+  border-right: .15em solid orange;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: .15em;
+  animation: 
+    typing 3.5s steps(40, end),
+    blink-caret .75s step-end infinite;
+}
+
+.custom-underline {
+  position: relative;
+}
+
+.custom-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 0;
+  background-color: orange;
+  transition: width 0.3s;
+}
+
+.custom-underline:hover::after {
+  width: 100%;
+}
+
+.corner-img {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  transform: rotate(45deg);
+  width: 20px;
+  height: 20px;
+}
