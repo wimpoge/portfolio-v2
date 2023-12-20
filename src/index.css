@@ -2,14 +2,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 :root {
-  background: #181a1b;
-  color: white;
-  font-family:'Comfortaa', 'Inter', sans-serif;
+  --background-dark: #181a1b;
+  --background-light: #fff;
+  --text-dark: white;
+  --text-light: #333;
+  --font-comfortaa: 'Comfortaa', 'Inter', sans-serif;
+
+  background: var(--background-dark);
+  color: var(--text-dark);
+  font-family: var(--font-comfortaa);
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.light-theme {
+  --background: var(--background-light);
+  --text: var(--text-light);
+}
+
+body.dark-theme {
+  --background: var(--background-dark);
+  --text: var(--text-dark);
+}
+
+body {
+  background: var(--background);
+  color: var(--text);
 }
 
 .sticky-nav {
