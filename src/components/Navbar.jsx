@@ -46,7 +46,7 @@ const Navbar = () => {
             const navbar = document.querySelector('.sticky-nav');
             if (navbar) {
                 const scrollPosition = window.scrollY;
-                setIsScrolling(scrollPosition > 100);
+                setIsScrolling(scrollPosition > 120);
             }
         };
 

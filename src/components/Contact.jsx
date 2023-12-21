@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 const Contact = () => {
+  const theme = useSelector((state) => state.theme);
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -46,7 +50,7 @@ const Contact = () => {
         <input
           type='submit'
           value='Send Message'
-          className='py-2 px-4 rounded bg-orange-500 text-white cursor-pointer hover:bg-orange-600'
+          className={`py-2 px-4 rounded  cursor-pointer  ${theme === 'light' ? 'bg-orange-500 text-white hover:bg-orange-600' : 'border-2 hover:bg-gray-500'}`}
         />
       </form>
     </div>
