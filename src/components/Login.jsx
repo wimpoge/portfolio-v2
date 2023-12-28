@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 
 const LoginForm = ({ onLogin }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://100.78.16.82:2500/profile/api/users/signin', {
+            const response = await fetch(`${BASE_URL}/profile/api/users/signin`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -20,8 +25,6 @@ const LoginForm = ({ onLogin }) => {
                 const data = await response.json();
                 console.log(data, 'data')
                 const token = data.data.token;
-                localStorage.setItem('token', token);
-                // set cookie to 12 hours
                 document.cookie = `token=${token}; max-age=43200; path=/`;
                   onLogin(token);
             } else {
@@ -63,6 +66,9 @@ const LoginForm = ({ onLogin }) => {
                     </div>
                 </form>
             </div>
+                        <button type="submit" className='border-2 rounded-lg p-2 hover:bg-black hover:text-white' onClick={() => navigate('/register')}>Register</button>
+
+           
         </div>
     );
 };

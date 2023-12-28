@@ -1,5 +1,3 @@
-
-// app.jsx
 import { useState, useEffect } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
@@ -12,6 +10,13 @@ import Contact from './components/Contact';
 import LoginForm from './components/Login';
 import { updateData } from './utils/updateData';
 import { getData } from './utils/getData';
+import Cookies from 'js-cookie';
+import Register from './components/Register';
+import { Route, Routes } from 'react-router-dom';
+import Dashboard from './components/Dashboard';
+
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -22,31 +27,21 @@ function App() {
     setLoggedIn(true);
     setToken(token);
 
-    localStorage.setItem('token', token);
+    Cookies.set('token', token, { expires: 1 / 8 });
   };
-
 
   const showUser = async () => {
     try {
-      console.log('Before calling getData');
-      const res = await getData(`http://17.1.16.57:2500/profile/api/users/show`);
-      console.log('After calling getData');
-  
-      if (res.ok) {
-        const data = await res.json();
-        console.log('Received data:', data);
-        setUserData(data);
-      } else {
-        console.error('Failed to fetch user data');
-      }
+      const res = await getData(`${BASE_URL}/profile/api/users/show`);
+      console.log(res);
+      setUserData(res);
     } catch (error) {
       console.error('Error during user data fetching:', error);
     }
   };
-  
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
+    const storedToken = Cookies.get('token');
 
     if (storedToken) {
       setLoggedIn(true);
@@ -61,20 +56,15 @@ function App() {
   }, [isLoggedIn, token]);
 
   return (
-    <div>
-      {isLoggedIn ? (
-        <>
-          <Navbar/>
-          <Header userData={userData} />
-          <About />
-          <Projects />
-          <Contact />
-        </>
-      ) : (
-        <LoginForm onLogin={handleLogin} />
-      )}
-    </div>
-  );
+    <Routes>
+      <Route exact path='/' element={isLoggedIn ? <Dashboard userData={userData} /> : <LoginForm onLogin={handleLogin} />} />
+      <Route exact path='/register' element={<Register />} />
+      <Route exact path='/login' element={<LoginForm onLogin={handleLogin} />} />
+    </Routes>
+
+
+  )
+
 }
 
 export default App;
